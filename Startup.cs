@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using meal_assistant_dotnet_mvc.Models;
+using Microsoft.EntityFrameworkCore;
+using meal_assistant_dotnet_mvc.Models.Entities;
 
 namespace meal_assistant_dotnet_mvc
 {
@@ -30,7 +33,12 @@ namespace meal_assistant_dotnet_mvc
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            services.AddEntityFrameworkNpgsql()
+               .AddDbContext<meal_assistant_developmentContext>(options =>
+#if DEBUG
+            options.UseNpgsql(Configuration.GetConnectionString("DevConnection")))
+               .BuildServiceProvider();
+#endif
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -46,7 +54,7 @@ namespace meal_assistant_dotnet_mvc
             {
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
             }
 
             app.UseHttpsRedirection();
@@ -59,6 +67,13 @@ namespace meal_assistant_dotnet_mvc
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            if (env.IsDevelopment())
+            {
+                app.UseSpa(spa =>
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                });
+            }
         }
     }
 }
