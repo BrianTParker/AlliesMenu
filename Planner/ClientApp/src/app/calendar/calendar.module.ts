@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { CalendarManagerComponent } from "./calendar-manager/calendar-manager.component";
+import { ManageCalendarComponent } from "./manage-calendar/manage-calendar.component";
 import { Routes, RouterModule } from "@angular/router";
-import { FullCalendarModule } from "ng-fullcalendar";
-const routes: Routes = [{ path: "", component: CalendarManagerComponent }];
+
+const routes: Routes = [{ path: "", component: ManageCalendarComponent }];
 @NgModule({
-  declarations: [CalendarManagerComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), FullCalendarModule]
+  declarations: [ManageCalendarComponent],
+  imports: [CommonModule, RouterModule.forChild(routes)]
 })
 export class CalendarModule {}
