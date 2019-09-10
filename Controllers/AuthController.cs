@@ -10,7 +10,7 @@ namespace meal_assistant_dotnet_mvc.Controllers
 {
     [Route("api/auth")]
     public class AuthController : Controller
-    {
+    {/* 
         [HttpPost, Route("login")]
         public IActionResult Login([FromBody]LoginModel user)
         {
@@ -39,6 +39,6 @@ namespace meal_assistant_dotnet_mvc.Controllers
             {
                 return Unauthorized();
             }
-        }
+        } */
     }
 }
